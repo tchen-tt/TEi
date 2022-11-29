@@ -1,0 +1,27 @@
+Package: TEi
+Type: Package
+Title: Transposable elements detection
+Version: 1.0.1
+Date: 2022-06-01
+Authors@R: c(
+  person(given = "Tao", family = "Chen", role = c("aut", "cre"), email = "hmcctt@163.com"),
+  person(given = "YiHan", family = "Xiao", role = "ctb", email = "1653008@tongji.edu.cn")
+  )
+Description: This package is use to transposable element detection from sequence data.
+License: GPL (>= 2)
+Depends:
+    R (>= 4.1.0)
+Imports: 
+    Rcpp (>= 1.0.8), 
+    Rhtslib, 
+    zlibbioc, 
+    BSgenome, 
+    Rsamtools,
+    Rbowtie2,
+    rtracklayer,
+    Biostrings,
+    S4Vectors,
+    GenomicRanges
+LinkingTo: Rcpp, Rhtslib, zlibbioc
+Encoding: UTF-8
+RoxygenNote: 7.2.2
