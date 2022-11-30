@@ -9,18 +9,25 @@
 #' @importFrom Biostrings DNAString
 #' @importFrom Biostrings pairwiseAlignment
 #' @importFrom Biostrings alignedSubject
+#' @importFrom Biostrings subseq
+#' @importFrom GenomicRanges GRanges
+#' @importFrom IRanges IRanges
+#' 
 #' 
 #' @export
 
+file <- "../../es_rnaseq/simulation_insert/output_tsd3/te_insertion.bed"
+
+
 processInsertion <- function(file, max.gapwidth = 10) {
-  file <- read.table(file = outfile, sep = "\t")
-  bed <- GRanges(seqnames = file$V1, 
-                 IRanges(start = file$V2, end = file$V3),
-                 name = file$V4, 
-                 sequence = file$V5, 
-                 type = file$V6,
-                 count = file$V7, 
-                 ratio = file$V8)
+  file <- read.table(file = file, sep = "\t")
+  bed <- GenomicRanges::GRanges(seqnames = file$V1, 
+      IRanges::IRanges(start = file$V2, end = file$V3),
+      name = file$V4, 
+      sequence = file$V5, 
+      type = file$V6,
+      count = file$V7, 
+      ratio = file$V8)
   insert <- GenomicRanges::reduce(bed, min.gapwidth = max.gapwidth)
   overlap <- GenomicRanges::findOverlaps(query = insert, subject = bed)
   index <- split(x = S4Vectors::subjectHits(overlap),
@@ -35,14 +42,14 @@ processInsertion <- function(file, max.gapwidth = 10) {
       insertion$left <- sum(location$count)
       insertion$right <- 0
       
-    } else if(max(each$type) == 1) {
+    } else if(max(location$type) == 1) {
       insertion$name <- location$name
       insertion$tsd <- unknown
       insertion$left <- 0
       insertion$right <- sum(location$count)
     } else {
-      right <- each[location$type == 1]
-      left <- each[location$type == 2]
+      right <- location[location$type == 1]
+      left <- location[location$type == 2]
       
       left <- left[which.max(left$count)]
       right <- right[which.max(right$count)]
@@ -54,7 +61,8 @@ processInsertion <- function(file, max.gapwidth = 10) {
       p1 <- Biostrings::alignedSubject(pair)
       insertion$name <- unique(location$name)
       
-      if (subseq(dna1, 1, width(p1)) == p1 & subseq(dna2, length(dna2)-width(p1)+1, length(dna2)) == p1) {
+      if (Biostrings::subseq(dna1, 1, Biostrings::width(p1)) == p1 & 
+          Biostrings::subseq(dna2, length(dna2)-Biostrings::width(p1)+1, length(dna2)) == p1) {
         tsd = as.character(p1)
         insertion$tsd <- tsd
       } else {
@@ -68,6 +76,6 @@ processInsertion <- function(file, max.gapwidth = 10) {
     
   }, min.gapwidth = max.gapwidth)
   
-  insertion <- do.call("c", insertion)
+  insertion <- Reduce("c", predict)
   return(insertion)
 }
