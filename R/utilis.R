@@ -16,7 +16,6 @@
 #' 
 #' @export
 
-file <- "../../es_rnaseq/simulation_insert/output_tsd3/te_insertion.bed"
 
 
 processInsertion <- function(file, max.gapwidth = 10) {
