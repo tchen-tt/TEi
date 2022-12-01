@@ -13,10 +13,7 @@
 #' @importFrom GenomicRanges GRanges
 #' @importFrom IRanges IRanges
 #' 
-#' 
 #' @export
-
-
 
 processInsertion <- function(file, max.gapwidth = 10) {
   file <- read.table(file = file, sep = "\t")
