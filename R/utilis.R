@@ -16,14 +16,25 @@
 #' @export
 
 processInsertion <- function(file, max.gapwidth = 10) {
-  file <- read.table(file = file, sep = "\t")
-  bed <- GenomicRanges::GRanges(seqnames = file$V1, 
-      IRanges::IRanges(start = file$V2, end = file$V3),
-      name = file$V4, 
-      sequence = file$V5, 
-      type = file$V6,
-      count = file$V7, 
-      ratio = file$V8)
+  bed <- tryCatch(
+            expr = {
+              file <- read.table(file = file, sep = "\t")
+              bed <- GenomicRanges::GRanges(
+                        seqnames = file$V1, 
+                        IRanges::IRanges(start = file$V2, end = file$V3),
+                        name = file$V4, 
+                        sequence = file$V5, 
+                        type = file$V6,
+                        count = file$V7, 
+                        ratio = file$V8)
+             },
+             error = function(...) {
+                return(GenomicRanges::GRanges())
+             }
+          )
+  if (length(bed) == 0) {
+    return(bed)
+  }
   insert <- GenomicRanges::reduce(bed, min.gapwidth = max.gapwidth)
   overlap <- GenomicRanges::findOverlaps(query = insert, subject = bed)
   index <- split(x = S4Vectors::subjectHits(overlap),
@@ -33,14 +44,16 @@ processInsertion <- function(file, max.gapwidth = 10) {
     insertion <- GenomicRanges::reduce(location, min.gapwidth = max.gapwidth)
     
     if (min(location$type) == 2) {
+      location <- location[which.max(location$count)]
       insertion$name <- location$name
-      insertion$tsd <- unknown
+      insertion$tsd <- "unknown"
       insertion$left <- sum(location$count)
       insertion$right <- 0
       
     } else if(max(location$type) == 1) {
+      location <- location[which.max(location$count)]
       insertion$name <- location$name
-      insertion$tsd <- unknown
+      insertion$tsd <- "unknown"
       insertion$left <- 0
       insertion$right <- sum(location$count)
     } else {
@@ -55,7 +68,8 @@ processInsertion <- function(file, max.gapwidth = 10) {
       
       pair <- Biostrings::pairwiseAlignment(pattern = dna1, subject = dna2, type = "overlap")
       p1 <- Biostrings::alignedSubject(pair)
-      insertion$name <- unique(location$name)
+      #insertion$name <- unique(location$name)
+      insertion$name <- left$name
       
       if (Biostrings::subseq(dna1, 1, Biostrings::width(p1)) == p1 & 
           Biostrings::subseq(dna2, length(dna2)-Biostrings::width(p1)+1, length(dna2)) == p1) {
