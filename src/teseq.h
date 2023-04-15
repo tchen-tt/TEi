@@ -4,7 +4,6 @@
 #include <htslib/bgzf.h>
 #include <htslib/kstring.h>
 #include <Rcpp.h>
-#include <Rinterface.h>
 #include <string>
 #include <cstring>
 #include <map>
