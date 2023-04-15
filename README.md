@@ -15,4 +15,5 @@ Improvements and new features will be added on a regular basis, please post on t
 \[2\] Chu C, Borges-Monroy R, Viswanadham V V, et al. Comprehensive identification of transposable element insertions using multiple sequencing technologies[J]. Nature communications, 2021, 12(1): 3836.  
 \[3\] Vendrell-Mir P, Barteri F, Merenciano M, et al. A benchmark of transposon insertion detection tools using real data[J]. Mobile DNA, 2019, 10: 1-19.  
 \[4\] Riehl K, Riccio C, Miska E A, et al. TransposonUltimate: software for transposon classification, annotation and detection[J]. Nucleic Acids Research, 2022, 50(11): e64-e64.  
+\[5\] Stuart T, Eichten S R, Cahn J, et al. Population scale mapping of transposable element diversity reveals links to gene regulation and epigenomic variation[J]. elife, 2016, 5: e20777.  
 
