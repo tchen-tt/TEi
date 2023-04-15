@@ -12,3 +12,6 @@ Improvements and new features will be added on a regular basis, please post on t
 
 # Reference
 \[1\] Tang Z, Steranka J P, Ma S, et al. Human transposon insertion profiling: Analysis, visualization and identification of somatic LINE-1 insertions in ovarian cancer[J]. Proceedings of the National Academy of Sciences, 2017, 114(5): E733-E740.
+\[2\] Chu C, Borges-Monroy R, Viswanadham V V, et al. Comprehensive identification of transposable element insertions using multiple sequencing technologies[J]. Nature communications, 2021, 12(1): 3836.
+\[3\] Vendrell-Mir P, Barteri F, Merenciano M, et al. A benchmark of transposon insertion detection tools using real data[J]. Mobile DNA, 2019, 10: 1-19.
+
