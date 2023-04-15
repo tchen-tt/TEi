@@ -6,12 +6,9 @@ TEi has been successfully installed on Mac OSX, Linux, and Windows, using the de
 
 ```r
 devtools::install_github("tchen-tt/TEi")
+
+
 ```
-
-
-
-
-
-
+# Contribution
 Improvements and new features will be added on a regular basis, please post on the github page with any question or if you would like to contribute.
 
