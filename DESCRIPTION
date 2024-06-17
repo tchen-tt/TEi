@@ -4,8 +4,8 @@ Title: Transposable elements detection
 Version: 1.0.1
 Date: 2022-06-01
 Authors@R: c(
-  person(given = "Tao", family = "Chen", role = "ctb", email = "taochenhm@gmail.com"), 
-  person(given = "Yihan", family = "Xiao", role = "ctb", email = "1653008@tongji.edu.cn"))
+  person(given = "Tao", family = "Chen", role = c("aut", "cre"), email = "taochenhm@gmail.com"), 
+  person(given = "Yihan", family = "Xiao", role = c("aut"), email = "1653008@tongji.edu.cn"))
 Description: This package is use to transposable element detection from sequence data.
 License: GPL (>= 2)
 Depends:
