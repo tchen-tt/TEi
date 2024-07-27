@@ -1,6 +1,8 @@
 # TEi
 TEi (Transposable element insertion identification) is design to identify TE insertion from paired-end illumina reads, takes whole-exome sequencing (WES), whole-genome sequencing (WGS) and Histone Modification (H3K27ac et al.) data
 
+![](./picture/workflow.png)
+
 # Installation
 TEi has been successfully installed on Mac OSX, Linux, and Windows, using the devtools package to install directly from GitHub
 
