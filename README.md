@@ -14,7 +14,7 @@ Improvements and new features will be added on a regular basis, please post on t
 
 # Contact
 Please contact us:  
-Tao Chen:[taochenhm@gmail.com](taochenhm@gmail.com)
+Tao Chen: <taochenhm@gmail.com>
 
 
 # Reference
