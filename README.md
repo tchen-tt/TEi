@@ -13,7 +13,7 @@ devtools::install_github("tchen-tt/TEi")
 Improvements and new features will be added on a regular basis, please post on the github page with any question or if you would like to contribute.
 
 # Contact
-Please contact us:
+Please contact us:  
 Tao Chen:[taochenhm@gmail.com](taochenhm@gmail.com)
 
 
