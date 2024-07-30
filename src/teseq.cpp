@@ -10,8 +10,25 @@ void processbam(std::string bamfile, std::string outfq, double quantile, int len
   uint32_t *cigar;
   
   fp = sam_open(file, "rb");
+  if (fp == NULL) {
+    Rcerr << "Error openning BAM file: " << file << std::endl;
+    return;
+  }
+  
   header = sam_hdr_read(fp);
+  if (header == NULL) {
+    Rcerr << "Error reading header from BAM file: " << file << std::endl;
+    return;
+  }
+  
   FILE *of = fopen(outfile, "w");
+  if (!of) {
+    Rcerr << "Error opening output file: " << outfile << std::endl;
+    sam_close(fp);
+    return;
+  }
+  
+  
   b = bam_init1();
   
   while(sam_read1(fp, header, b) >= 0) {
@@ -67,6 +84,10 @@ void processSam2bed(std::string alignmentfile, std::string outbedfile, float rat
   const char *aligment = alignmentfile.data();
   const char *outbed = outbedfile.data();
   FILE *OF = fopen(outbed, "w");
+  if (!OF) {
+    Rcerr << "Error opening output BED file: " << outbed << std::endl;
+    return;
+  }
   
   bam_hdr_t *header = NULL;
   bam1_t **reads = NULL, *read = NULL;
@@ -74,13 +95,12 @@ void processSam2bed(std::string alignmentfile, std::string outbedfile, float rat
   htsFile *ifile = NULL;
   char *lname = NULL;
   
-  int m_stack, l_stack = 0, i;
   int rv = 0;
   
   ifile = sam_open(aligment, "rb");
   header = sam_hdr_read(ifile);
   
-  m_stack = 100;
+  int m_stack = 100, l_stack = 0;
   reads = (bam1_t **)malloc(sizeof(bam1_t *) * m_stack);
   
   if (reads == NULL) {
@@ -104,19 +124,31 @@ void processSam2bed(std::string alignmentfile, std::string outbedfile, float rat
 
       if (l_stack >= m_stack) {
         m_stack *= 2;
-        if ((reads = (bam1_t **)realloc(reads, sizeof(bam1_t *)* m_stack)) == NULL) {
+        
+        // if ((reads = (bam1_t **)realloc(reads, sizeof(bam1_t *) * m_stack)) == NULL) {
+        //   Rcerr << "Couldn't reallocate enough memory to hold " << 
+        //   m_stack << "." << std::endl;
+        //   for (i = 0; i < m_stack; i++) bam_destroy1(reads[i]);
+        // }
+        // for(i = l_stack; i<m_stack; i++) reads[i] = bam_init1();
+        
+        
+        bam1_t **temp_reads = (bam1_t **)realloc(reads, sizeof(bam1_t *) * m_stack);
+        if (!temp_reads) {
           Rcerr << "Couldn't reallocate enough memory to hold " << 
-            m_stack << "." << std::endl;
-          for (i = 0; i < m_stack; i++) bam_destroy1(reads[i]);
+            m_stack << "reads." << std::endl;
+          for (int i = 0; i < l_stack; i++) bam_destroy1(reads[i]);
+          free(reads);
+          sam_close(ifile);
+          fclose(OF);
+          return;
         }
-        for(i = l_stack; i<m_stack; i++) reads[i] = bam_init1();
-
+        reads = temp_reads;
       } 
+      
       reads[l_stack] = bam_init1();
       bam_copy1(reads[l_stack], read);
       l_stack++;
-
-      
     } else {
       bam2bed(reads, l_stack, OF, ratio, header);
       // bam2bed(reads, l_stack, OF, ratio, header, length);
