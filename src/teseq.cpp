@@ -267,7 +267,7 @@ void processSequence1(bam1_t *b, bam_hdr_t *hdr, FILE *f, int length, int tsd) {
           continue;
         }
       } 
-      else if (i == c->n_cigar){
+      else if (i == c->n_cigar - 1){
         if (bam_cigar_op(cigar[i-1]) == 0) {
           type = 2; //MS
         } else {
