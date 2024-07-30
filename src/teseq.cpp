@@ -5,9 +5,6 @@
  * with filtering based on a ratio threshold.
  */
 
-
-
-
 #include "teseq.h"
 
 //[[Rcpp::export]]
