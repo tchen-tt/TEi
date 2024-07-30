@@ -1,3 +1,13 @@
+/* This code is designed for bioinformatics analysis, specifically processing BAM files to 
+ * filter and extract specific sequences based on CIGAR operations, quality scores, and TSD. 
+ *
+ * It outputs the processed sequences in FASTQ format and converts alignments to BED format 
+ * with filtering based on a ratio threshold.
+ */
+
+
+
+
 #include "teseq.h"
 
 //[[Rcpp::export]]
